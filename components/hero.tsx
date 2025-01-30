@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export function Hero() {
   return (
@@ -69,7 +69,7 @@ export function Hero() {
 
         <div className="rounded-t-2xl overflow-hidden">
           <Image
-            src="/images/hero_nft.jpg"
+            src="/images/spacewalking.svg"
             alt="Space Walking NFT"
             width={500}
             height={400}
@@ -77,7 +77,7 @@ export function Hero() {
           />
         </div>
 
-        <div className="bg-backgroundSecondary rounded-b-2xl p-4 mb-6">
+        {/* <div className="bg-backgroundSecondary rounded-b-2xl p-4 mb-6">
           <h4 className="text-lg mb-2">Space Walking</h4>
           <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6">
@@ -85,7 +85,7 @@ export function Hero() {
             </Avatar>
             <span className="text-sm">AnimaKid</span>
           </div>
-        </div>
+        </div> */}
 
         <p className="text-base text-gray-400 mb-6">
           NFT Marketplace UI Created With Anima For Figma. Collect, Buy And Sell

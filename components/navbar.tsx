@@ -1,13 +1,43 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useAppKit } from "@reown/appkit/react";
+
+import { solanaWeb3JsAdapter, projectId, networks } from "@/config";
+import { createAppKit } from "@reown/appkit/react";
+
+// Set up metadata
+const metadata = {
+  name: "solnify",
+  description:
+    "A next-gen NFT marketplace on Solana, offering fast, low-cost transactions and seamless NFT trading. Powered by Reown AppKit, Solnify ensures secure, trustless ownership transfers while enhancing user experience with a smooth and intuitive interface. Whether you're minting, buying, or selling, Solnify makes NFT trading effortless.",
+  url: "https://solnify.vercel.app/",
+  icons: ["https://avatars.githubusercontent.com/u/179229932"],
+};
+
+// Create the modal
+createAppKit({
+  adapters: [solanaWeb3JsAdapter],
+  projectId,
+  networks,
+  metadata,
+  themeMode: "dark",
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  },
+  themeVariables: {
+    "--w3m-accent": "#000000",
+  },
+});
 
 export function Navbar() {
+  const { open } = useAppKit();
   return (
     <nav className="flex items-center justify-between py-5 px-4 md:px-[50px]">
       <div className="flex items-center gap-3">
-        <span className="text-xl font-bold">NFT Marketplace</span>
+        <span className="text-xl font-bold">Solnify</span>
       </div>
 
       {/* Desktop Navigation */}
@@ -30,7 +60,15 @@ export function Navbar() {
         >
           Connect a wallet
         </Link>
-        <Button className="bg-purple-600 hover:bg-purple-700">Sign Up</Button>
+        <Button
+          className="bg-purple-600 hover:bg-purple-700"
+          onClick={() => {
+            console.log("working");
+            open({ view: "Connect" });
+          }}
+        >
+          Sign Up
+        </Button>
       </div>
 
       {/* Mobile Navigation */}
@@ -58,9 +96,16 @@ export function Navbar() {
             >
               Connect a wallet
             </Link>
-            <Button className="bg-purple-600 hover:bg-purple-700 w-full">
+            <Button
+              className="bg-red hover:bg-purple-700 w-full"
+              onClick={() => {
+                console.log("working");
+                open({ view: "Networks" });
+              }}
+            >
               Sign Up
             </Button>
+            {/* <appkit-button /> */}
           </div>
         </SheetContent>
       </Sheet>
