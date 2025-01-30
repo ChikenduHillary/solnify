@@ -11,7 +11,7 @@ import { UploadArea } from "@/components/create-nft/upload-area";
 import { Info, DollarSign, Globe } from "lucide-react";
 
 export default function CreateNFTPage() {
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -34,7 +34,7 @@ export function ArtistProfile({
       {/* Banner */}
       <div className="h-[300px] relative">
         <Image
-          src={"/images/cover.svg"}
+          src={avatar}
           width={2000}
           height={2000}
           quality={1}
