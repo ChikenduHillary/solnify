@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import ContextProvider from "@/context";
+import Providers from "@/components/Providers";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.variable} antialiased`}>
-        <ContextProvider>{children}</ContextProvider>
+        <Providers>
+          <ContextProvider>{children}</ContextProvider>
+        </Providers>
       </body>
     </html>
   );
