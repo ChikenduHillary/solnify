@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,19 +9,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Footer } from "@/components/footer";
 import { ImageIcon, Loader2 } from "lucide-react";
-import {
-  onboardingSchema,
-  type OnboardingFormValues,
-} from "@/lib/schemas/onboarding-schema";
+
+interface OnboardingFormValues {
+  username: string;
+  email: string;
+  bio: string;
+  twitter: string;
+  instagram: string;
+  website: string;
+}
 
 export default function OnboardingPage() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<OnboardingFormValues>({
-    resolver: zodResolver(onboardingSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -91,17 +94,21 @@ export default function OnboardingPage() {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="username">Username</Label>
-                <Controller
-                  name="username"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="username"
-                      placeholder="Your unique username"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500"
-                    />
-                  )}
+                <Input
+                  id="username"
+                  placeholder="Your unique username"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500"
+                  {...register("username", {
+                    required: "Username is required",
+                    minLength: {
+                      value: 3,
+                      message: "Username must be at least 3 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Username must be less than 50 characters",
+                    },
+                  })}
                 />
                 {errors.username && (
                   <p className="text-red-500 text-sm mt-1">
@@ -112,18 +119,18 @@ export default function OnboardingPage() {
 
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Controller
-                  name="email"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="email"
-                      type="email"
-                      placeholder="Your email address"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500"
-                    />
-                  )}
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Your email address"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">
@@ -134,17 +141,16 @@ export default function OnboardingPage() {
 
               <div>
                 <Label htmlFor="bio">Bio</Label>
-                <Controller
-                  name="bio"
-                  control={control}
-                  render={({ field }) => (
-                    <Textarea
-                      {...field}
-                      id="bio"
-                      placeholder="Tell us about yourself"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500 min-h-[100px]"
-                    />
-                  )}
+                <Textarea
+                  id="bio"
+                  placeholder="Tell us about yourself"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500 min-h-[100px]"
+                  {...register("bio", {
+                    maxLength: {
+                      value: 500,
+                      message: "Bio must be less than 500 characters",
+                    },
+                  })}
                 />
                 {errors.bio && (
                   <p className="text-red-500 text-sm mt-1">
@@ -155,17 +161,16 @@ export default function OnboardingPage() {
 
               <div>
                 <Label htmlFor="twitter">Twitter</Label>
-                <Controller
-                  name="twitter"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="twitter"
-                      placeholder="Your Twitter profile URL"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500"
-                    />
-                  )}
+                <Input
+                  id="twitter"
+                  placeholder="Your Twitter profile URL"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500"
+                  {...register("twitter", {
+                    pattern: {
+                      value: /^https?:\/\/.+/,
+                      message: "Invalid URL",
+                    },
+                  })}
                 />
                 {errors.twitter && (
                   <p className="text-red-500 text-sm mt-1">
@@ -176,17 +181,16 @@ export default function OnboardingPage() {
 
               <div>
                 <Label htmlFor="instagram">Instagram</Label>
-                <Controller
-                  name="instagram"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="instagram"
-                      placeholder="Your Instagram profile URL"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500"
-                    />
-                  )}
+                <Input
+                  id="instagram"
+                  placeholder="Your Instagram profile URL"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500"
+                  {...register("instagram", {
+                    pattern: {
+                      value: /^https?:\/\/.+/,
+                      message: "Invalid URL",
+                    },
+                  })}
                 />
                 {errors.instagram && (
                   <p className="text-red-500 text-sm mt-1">
@@ -197,17 +201,16 @@ export default function OnboardingPage() {
 
               <div>
                 <Label htmlFor="website">Website</Label>
-                <Controller
-                  name="website"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="website"
-                      placeholder="Your personal website URL"
-                      className="bg-[#242435] border-gray-700 focus:border-purple-500"
-                    />
-                  )}
+                <Input
+                  id="website"
+                  placeholder="Your personal website URL"
+                  className="bg-[#242435] border-gray-700 focus:border-purple-500"
+                  {...register("website", {
+                    pattern: {
+                      value: /^https?:\/\/.+/,
+                      message: "Invalid URL",
+                    },
+                  })}
                 />
                 {errors.website && (
                   <p className="text-red-500 text-sm mt-1">
